@@ -4,7 +4,8 @@
  * The URL is probably a good start though.
  */
 export const trackPageview = (params) => {
-  console.log(`--> Tracking Pageview: ${params}`);
+    const page = window.location.href;
+    console.log(`--> Tracking Pageview: ${params}`);
 };
 
 /**
@@ -13,5 +14,5 @@ export const trackPageview = (params) => {
  * The URL and an event name are probably a good start though.
  */
 export const trackEvent = (params) => {
-  console.log(`--> Tracking Event: ${params}`);
+    console.log(`--> Tracking Event: ${params}`);
 };

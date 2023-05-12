@@ -1,14 +1,13 @@
 import { trackPageview, trackEvent } from "../../src/analytics-api";
-import { getVariantId } from "../../src/utils";
-let variantId = getVariantId();
-// console.log('window.location.href', window.location.href)
+let variantId = localStorage.getItem('variant') || 1;
 
 const signupEle = document.querySelectorAll('[data-cta="signup"]');
-console.log('signupEle', signupEle)
-
 signupEle.forEach(cta => {
     cta.addEventListener('click', function () {
-        trackPageview(variantId)
+        trackPageview({
+            variantId,
+            pageName: window.location.href
+        })
         trackEvent(variantId)
     });
 });

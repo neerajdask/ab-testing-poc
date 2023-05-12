@@ -130,6 +130,7 @@ exports.trackPageview = exports.trackEvent = void 0;
  * The URL is probably a good start though.
  */
 var trackPageview = function trackPageview(params) {
+  var page = window.location.href;
   console.log("--> Tracking Pageview: ".concat(params));
 };
 
@@ -143,34 +144,22 @@ var trackEvent = function trackEvent(params) {
   console.log("--> Tracking Event: ".concat(params));
 };
 exports.trackEvent = trackEvent;
-},{}],"src/utils.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getVariantId = void 0;
-var getVariantId = function getVariantId() {
-  return localStorage.getItem('variant') || 1;
-};
-exports.getVariantId = getVariantId;
 },{}],"src/details/index.js":[function(require,module,exports) {
 "use strict";
 
 var _analyticsApi = require("../../src/analytics-api");
-var _utils = require("../../src/utils");
-var variantId = (0, _utils.getVariantId)();
-// console.log('window.location.href', window.location.href)
-
+var variantId = localStorage.getItem('variant') || 1;
 var signupEle = document.querySelectorAll('[data-cta="signup"]');
-console.log('signupEle', signupEle);
 signupEle.forEach(function (cta) {
   cta.addEventListener('click', function () {
-    (0, _analyticsApi.trackPageview)(variantId);
+    (0, _analyticsApi.trackPageview)({
+      variantId: variantId,
+      pageName: window.location.href
+    });
     (0, _analyticsApi.trackEvent)(variantId);
   });
 });
-},{"../../src/analytics-api":"src/analytics-api.js","../../src/utils":"src/utils.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"../../src/analytics-api":"src/analytics-api.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -195,7 +184,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55336" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64523" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

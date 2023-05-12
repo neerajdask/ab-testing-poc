@@ -185,6 +185,7 @@ exports.trackPageview = exports.trackEvent = void 0;
  * The URL is probably a good start though.
  */
 var trackPageview = function trackPageview(params) {
+  var page = window.location.href;
   console.log("--> Tracking Pageview: ".concat(params));
 };
 
@@ -198,40 +199,34 @@ var trackEvent = function trackEvent(params) {
   console.log("--> Tracking Event: ".concat(params));
 };
 exports.trackEvent = trackEvent;
-},{}],"src/utils.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getVariantId = void 0;
-var getVariantId = function getVariantId() {
-  return localStorage.getItem('variant') || 1;
-};
-exports.getVariantId = getVariantId;
 },{}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
 require("./styles.css");
 var _analyticsApi = require("./analytics-api.js");
-var _utils = require("./utils");
-var variantId = (0, _utils.getVariantId)();
 var buttons = document.querySelectorAll('.variant-btn');
 var signupEle = document.querySelectorAll('[data-cta="signup"]');
 var variants = document.querySelectorAll('.articles');
+var variantId = localStorage.getItem('variant') || 1;
+buttons.forEach(function (btn, index) {
+  btn.classList.remove('active');
+  if (variantId - 1 === index) {
+    btn.classList.add('active');
+  }
+});
+variants.forEach(function (variant, index) {
+  variant.classList.remove('active-variant');
+  if (variantId - 1 === index) {
+    variant.classList.add('active-variant');
+  }
+});
 signupEle.forEach(function (cta) {
   cta.addEventListener('click', function () {
-    var variantId = (0, _utils.getVariantId)();
     (0, _analyticsApi.trackPageview)(variantId);
     (0, _analyticsApi.trackEvent)(variantId);
   });
 });
 buttons.forEach(function (button) {
-  buttons.forEach(function (btn) {
-    if (btn.id === variantId) {
-      btn.classList.add('active');
-    }
-  });
   button.addEventListener('click', function () {
     // update button state
     buttons.forEach(function (btn) {
@@ -240,6 +235,7 @@ buttons.forEach(function (button) {
     variants.forEach(function (variant) {
       return variant.classList.remove('active-variant');
     });
+    console.log('this.id', this.id);
     this.classList.add('active');
     variants[this.id - 1].classList.add('active-variant');
     // save for persistence
@@ -249,7 +245,7 @@ buttons.forEach(function (button) {
 var updateVariant = function updateVariant(id) {
   localStorage.setItem("variant", id);
 };
-},{"./styles.css":"src/styles.css","./analytics-api.js":"src/analytics-api.js","./utils":"src/utils.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./styles.css":"src/styles.css","./analytics-api.js":"src/analytics-api.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -274,7 +270,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55336" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64523" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
