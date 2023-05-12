@@ -208,6 +208,8 @@ var buttons = document.querySelectorAll('.variant-btn');
 var signupEle = document.querySelectorAll('[data-cta="signup"]');
 var variants = document.querySelectorAll('.articles');
 var variantId = localStorage.getItem('variant') || 1;
+
+// Flush out the active class and set it back again based on local storage value.
 buttons.forEach(function (btn, index) {
   btn.classList.remove('active');
   if (variantId - 1 === index) {
@@ -242,6 +244,8 @@ buttons.forEach(function (button) {
     updateVariant(this.id);
   });
 });
+
+// synchronize the variant value for subsequent changes
 var updateVariant = function updateVariant(id) {
   localStorage.setItem("variant", id);
 };

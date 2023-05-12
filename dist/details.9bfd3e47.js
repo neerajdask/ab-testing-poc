@@ -150,12 +150,17 @@ exports.trackEvent = trackEvent;
 var _analyticsApi = require("../../src/analytics-api");
 var variantId = localStorage.getItem('variant') || 1;
 var signupEle = document.querySelectorAll('[data-cta="signup"]');
+
+/**
+ * Attach event listeners to all elements that lead to Signup
+ */
 signupEle.forEach(function (cta) {
   cta.addEventListener('click', function () {
     (0, _analyticsApi.trackPageview)({
       variantId: variantId,
       pageName: window.location.href
     });
+    // We can separate out the entry point through which the click happened, by separating out the elements. This might help us understand where the ambient button placement is.
     (0, _analyticsApi.trackEvent)(variantId);
   });
 });
