@@ -224,8 +224,11 @@ variants.forEach(function (variant, index) {
 });
 signupEle.forEach(function (cta) {
   cta.addEventListener('click', function () {
-    (0, _analyticsApi.trackPageview)(variantId);
-    (0, _analyticsApi.trackEvent)(variantId);
+    (0, _analyticsApi.trackPageview)({
+      variantId: localStorage.getItem('variant') || 1,
+      pageName: window.location.href
+    });
+    (0, _analyticsApi.trackEvent)(localStorage.getItem('variant') || 1);
   });
 });
 buttons.forEach(function (button) {
@@ -237,7 +240,6 @@ buttons.forEach(function (button) {
     variants.forEach(function (variant) {
       return variant.classList.remove('active-variant');
     });
-    console.log('this.id', this.id);
     this.classList.add('active');
     variants[this.id - 1].classList.add('active-variant');
     // save for persistence

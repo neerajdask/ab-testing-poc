@@ -24,8 +24,11 @@ variants.forEach((variant, index) => {
 
 signupEle.forEach(cta => {
     cta.addEventListener('click', function () {
-        trackPageview(variantId)
-        trackEvent(variantId)
+        trackPageview({
+            variantId: localStorage.getItem('variant') || 1,
+            pageName: window.location.href,
+        })
+        trackEvent(localStorage.getItem('variant') || 1)
     });
 });
 
@@ -34,7 +37,6 @@ buttons.forEach(button => {
         // update button state
         buttons.forEach(btn => btn.classList.remove('active'));
         variants.forEach(variant => variant.classList.remove('active-variant'));
-        console.log('this.id', this.id)
         this.classList.add('active');
         variants[this.id - 1].classList.add('active-variant');
         // save for persistence
